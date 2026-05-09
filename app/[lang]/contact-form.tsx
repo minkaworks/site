@@ -7,6 +7,22 @@ type ContactCopy = (typeof dictionary)['en']['contact']
 
 type Status = 'idle' | 'submitting' | 'success' | 'error'
 
+function formatErrorDetails(value: unknown) {
+  if (typeof value === 'string') {
+    return value
+  }
+
+  if (value && typeof value === 'object') {
+    try {
+      return JSON.stringify(value)
+    } catch {
+      return null
+    }
+  }
+
+  return null
+}
+
 export function ContactForm({ copy }: { copy: ContactCopy }) {
   const [status, setStatus] = useState<Status>('idle')
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
@@ -28,13 +44,7 @@ export function ContactForm({ copy }: { copy: ContactCopy }) {
 
     if (!response.ok) {
       const details = payload && typeof payload === 'object' ? (payload as { details?: unknown; error?: string }) : null
-      setErrorMessage(
-        typeof details?.error === 'string'
-          ? details.error
-          : typeof details?.details === 'string'
-            ? details.details
-            : copy.error,
-      )
+      setErrorMessage(formatErrorDetails(details?.details) ?? details?.error ?? copy.error)
       setStatus('error')
       return
     }

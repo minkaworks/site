@@ -44,28 +44,23 @@ The prepared script lives in `google-apps-script/Code.gs` and includes the manif
 ```javascript
 function doPost(e) {
   const payload = JSON.parse(e.postData.contents)
-  const [givenName, ...rest] = String(payload.name || '').trim().split(/\s+/)
-  const familyName = rest.join(' ')
 
-  const response = UrlFetchApp.fetch('https://people.googleapis.com/v1/people:createContact?personFields=names,emailAddresses', {
-    method: 'post',
-    contentType: 'application/json',
-    headers: {
-      Authorization: 'Bearer ' + ScriptApp.getOAuthToken(),
-    },
-    payload: JSON.stringify({
-      names: [{ givenName: givenName || 'Lead', familyName: familyName || 'Lead' }],
-      emailAddresses: [{ value: payload.email || '' }],
-    }),
-  })
+  const spreadsheet = SpreadsheetApp.openById('PASTE_YOUR_SPREADSHEET_ID_HERE')
+  const sheet = spreadsheet.getSheetByName('Leads') || spreadsheet.insertSheet('Leads')
 
-  return ContentService.createTextOutput(JSON.stringify({ ok: true }))
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow(['Timestamp', 'Name', 'Company', 'Email', 'Message'])
+  }
+
+  sheet.appendRow([new Date(), payload.name, payload.company || '', payload.email, payload.message])
+
+  return ContentService.createTextOutput(JSON.stringify({ ok: true, sheet: sheet.getName() }))
     .setMimeType(ContentService.MimeType.JSON)
 }
 ```
 
 Deploy the script as a web app and allow the endpoint to be called from your server.
 
-The script uses the Google People API directly so it does not depend on `ContactsApp`.
+Replace `PASTE_YOUR_SPREADSHEET_ID_HERE` with the ID from your Google Sheet URL.
 
-Make sure the Apps Script project has the People API enabled in Google Cloud and that the manifest includes the `https://www.googleapis.com/auth/script.external_request` and `https://www.googleapis.com/auth/contacts` scopes.
+Make sure the Apps Script project manifest includes the `https://www.googleapis.com/auth/spreadsheets` scope.

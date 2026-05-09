@@ -3,30 +3,18 @@ function doPost(e) {
     const payload = parsePayload_(e)
     validatePayload_(payload)
 
-    const [givenName, ...rest] = String(payload.name).trim().split(/\s+/)
-    const familyName = rest.join(' ') || 'Lead'
-
-    const createdContact = createContact_(
-      givenName || 'Lead',
-      familyName,
+    const sheet = getLeadsSheet_()
+    sheet.appendRow([
+      new Date(),
+      String(payload.name).trim(),
+      String(payload.company || '').trim(),
       String(payload.email).trim(),
-    )
-
-    const notes = [payload.company, payload.message]
-      .map(function (value) {
-        return String(value || '').trim()
-      })
-      .filter(Boolean)
-      .join('\n\n')
-
-    // Notes are intentionally included in the display name payload only if the
-    // People API accepts them as part of the contact creation payload.
+      String(payload.message).trim(),
+    ])
 
     return jsonResponse_({
       ok: true,
-      name: createdContact.names && createdContact.names[0] ? createdContact.names[0].displayName : String(payload.name).trim(),
-      email: String(payload.email).trim(),
-      notes,
+      sheet: sheet.getName(),
     })
   } catch (error) {
     console.error(error)
@@ -70,48 +58,27 @@ function validatePayload_(payload) {
   }
 }
 
-function createContact_(givenName, familyName, email) {
-  const response = UrlFetchApp.fetch(
-    'https://people.googleapis.com/v1/people:createContact?personFields=names,emailAddresses',
-    {
-      method: 'post',
-      contentType: 'application/json',
-      headers: {
-        Authorization: 'Bearer ' + ScriptApp.getOAuthToken(),
-      },
-      payload: JSON.stringify({
-        names: [
-          {
-            givenName: givenName,
-            familyName: familyName,
-          },
-        ],
-        emailAddresses: [
-          {
-            value: email,
-          },
-        ],
-      }),
-      muteHttpExceptions: true,
-    },
-  )
+function getLeadsSheet_() {
+  const spreadsheetId = 'PASTE_YOUR_SPREADSHEET_ID_HERE'
+  const sheetName = 'Leads'
 
-  const body = response.getContentText()
-  let json = {}
-
-  if (body) {
-    try {
-      json = JSON.parse(body)
-    } catch (parseError) {
-      throw new Error(body)
-    }
+  if (spreadsheetId === 'PASTE_YOUR_SPREADSHEET_ID_HERE') {
+    throw new Error('Missing spreadsheet ID')
   }
 
-  if (response.getResponseCode() >= 400) {
-    throw new Error(json.error && json.error.message ? json.error.message : body || 'Failed to create contact')
+  const spreadsheet = SpreadsheetApp.openById(spreadsheetId)
+  let sheet = spreadsheet.getSheetByName(sheetName)
+
+  if (!sheet) {
+    sheet = spreadsheet.insertSheet(sheetName)
+    sheet.appendRow(['Timestamp', 'Name', 'Company', 'Email', 'Message'])
   }
 
-  return json
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow(['Timestamp', 'Name', 'Company', 'Email', 'Message'])
+  }
+
+  return sheet
 }
 
 function jsonResponse_(payload) {

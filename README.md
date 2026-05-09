@@ -19,8 +19,8 @@ npm run build
 
 ## Deployment
 
-This app is meant to be deployed from `apps/landing`.
+This repository is deployed from its own root.
 
-If you connect the repo to Vercel from the monorepo root, set **Root Directory** to `apps/landing` in the Vercel project settings.
+If you connect it to Vercel, keep **Root Directory** unset or point it to the repository root.
 
 The repo also includes `vercel.json` to make the Next.js build explicit for Vercel deployments.

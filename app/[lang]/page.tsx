@@ -1,8 +1,22 @@
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { ContactForm } from './contact-form'
 import { dictionary, isLocale, locales } from './content'
 import { Nav } from './nav'
 import { SlideScroll } from './slide-scroll'
+
+const pageMetadata = {
+  es: {
+    title: 'Minka Works | IA práctica para negocios de Latinoamérica',
+    description:
+      'Minka Works ayuda a negocios de Latinoamérica a ordenar procesos que hoy dependen de WhatsApp, hojas de cálculo y trabajo manual.',
+  },
+  en: {
+    title: 'Minka Works | Practical AI for Latin American Businesses',
+    description:
+      'Minka Works helps Latin American businesses organize work that still depends on WhatsApp, spreadsheets, and manual workflows.',
+  },
+} as const
 
 function ClipboardIcon() {
   return (
@@ -44,6 +58,35 @@ function CycleIcon() {
 
 export function generateStaticParams() {
   return locales.map((lang) => ({ lang }))
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const { lang } = await params
+
+  if (!isLocale(lang)) {
+    return {}
+  }
+
+  const metadata = pageMetadata[lang]
+
+  return {
+    title: metadata.title,
+    description: metadata.description,
+    alternates: {
+      canonical: `/${lang}`,
+      languages: {
+        es: '/es',
+        en: '/en',
+      },
+    },
+    openGraph: {
+      title: metadata.title,
+      description: metadata.description,
+      url: `https://minkaworks.com/${lang}`,
+      siteName: 'Minka Works',
+      type: 'website',
+    },
+  }
 }
 
 export default async function Home({ params }: { params: Promise<{ lang: string }> }) {

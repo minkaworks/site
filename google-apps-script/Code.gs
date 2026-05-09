@@ -4,8 +4,8 @@ function doPost(e) {
     validatePayload_(payload)
 
     const [givenName, ...rest] = String(payload.name).trim().split(/\s+/)
-    const familyName = rest.join(' ')
-    const contact = ContactsApp.createContact(givenName || 'Lead', familyName || '', String(payload.email).trim())
+    const familyName = rest.join(' ') || 'Lead'
+    const contact = ContactsApp.createContact(givenName || 'Lead', familyName, String(payload.email).trim())
 
     const notes = [payload.company, payload.message]
       .map(function (value) {

@@ -25,7 +25,13 @@ export async function POST(request: Request) {
   const data = (await response.json().catch(() => null)) as { ok?: boolean } | null
 
   if (!response.ok || !data?.ok) {
-    return Response.json({ error: 'Could not send the message' }, { status: 502 })
+    return Response.json(
+      {
+        error: 'Could not send the message',
+        details: data,
+      },
+      { status: 502 },
+    )
   }
 
   return Response.json({ ok: true })

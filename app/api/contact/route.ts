@@ -22,13 +22,21 @@ export async function POST(request: Request) {
     body: JSON.stringify({ name, company, email, message }),
   })
 
-  const data = (await response.json().catch(() => null)) as { ok?: boolean } | null
+  const responseText = await response.text()
+  const data = (() => {
+    try {
+      return JSON.parse(responseText) as { ok?: boolean; error?: string } | null
+    } catch {
+      return null
+    }
+  })()
 
   if (!response.ok || !data?.ok) {
     return Response.json(
       {
         error: 'Could not send the message',
-        details: data,
+        details: data ?? responseText,
+        upstreamStatus: response.status,
       },
       { status: 502 },
     )

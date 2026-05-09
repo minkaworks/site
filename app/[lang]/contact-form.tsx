@@ -9,10 +9,12 @@ type Status = 'idle' | 'submitting' | 'success' | 'error'
 
 export function ContactForm({ copy }: { copy: ContactCopy }) {
   const [status, setStatus] = useState<Status>('idle')
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setStatus('submitting')
+    setErrorMessage(null)
 
     const form = event.currentTarget
     const formData = new FormData(form)
@@ -22,7 +24,17 @@ export function ContactForm({ copy }: { copy: ContactCopy }) {
       body: formData,
     })
 
+    const payload = await response.json().catch(() => null)
+
     if (!response.ok) {
+      const details = payload && typeof payload === 'object' ? (payload as { details?: unknown; error?: string }) : null
+      setErrorMessage(
+        typeof details?.error === 'string'
+          ? details.error
+          : typeof details?.details === 'string'
+            ? details.details
+            : copy.error,
+      )
       setStatus('error')
       return
     }
@@ -53,7 +65,7 @@ export function ContactForm({ copy }: { copy: ContactCopy }) {
         {status === 'submitting' ? '...' : copy.submit}
       </button>
       {status === 'success' ? <p className="formStatus success">{copy.success}</p> : null}
-      {status === 'error' ? <p className="formStatus error">{copy.error}</p> : null}
+      {status === 'error' ? <p className="formStatus error">{errorMessage ?? copy.error}</p> : null}
     </form>
   )
 }

@@ -5,7 +5,12 @@ function doPost(e) {
 
     const [givenName, ...rest] = String(payload.name).trim().split(/\s+/)
     const familyName = rest.join(' ') || 'Lead'
-    const contact = ContactsApp.createContact(givenName || 'Lead', familyName, String(payload.email).trim())
+
+    const createdContact = createContact_(
+      givenName || 'Lead',
+      familyName,
+      String(payload.email).trim(),
+    )
 
     const notes = [payload.company, payload.message]
       .map(function (value) {
@@ -14,14 +19,14 @@ function doPost(e) {
       .filter(Boolean)
       .join('\n\n')
 
-    if (notes) {
-      contact.setNotes(notes)
-    }
+    // Notes are intentionally included in the display name payload only if the
+    // People API accepts them as part of the contact creation payload.
 
     return jsonResponse_({
       ok: true,
-      name: contact.getFullName(),
+      name: createdContact.names && createdContact.names[0] ? createdContact.names[0].displayName : String(payload.name).trim(),
       email: String(payload.email).trim(),
+      notes,
     })
   } catch (error) {
     console.error(error)
@@ -63,6 +68,50 @@ function validatePayload_(payload) {
   if (!String(payload.message || '').trim()) {
     throw new Error('Missing message')
   }
+}
+
+function createContact_(givenName, familyName, email) {
+  const response = UrlFetchApp.fetch(
+    'https://people.googleapis.com/v1/people:createContact?personFields=names,emailAddresses',
+    {
+      method: 'post',
+      contentType: 'application/json',
+      headers: {
+        Authorization: 'Bearer ' + ScriptApp.getOAuthToken(),
+      },
+      payload: JSON.stringify({
+        names: [
+          {
+            givenName: givenName,
+            familyName: familyName,
+          },
+        ],
+        emailAddresses: [
+          {
+            value: email,
+          },
+        ],
+      }),
+      muteHttpExceptions: true,
+    },
+  )
+
+  const body = response.getContentText()
+  let json = {}
+
+  if (body) {
+    try {
+      json = JSON.parse(body)
+    } catch (parseError) {
+      throw new Error(body)
+    }
+  }
+
+  if (response.getResponseCode() >= 400) {
+    throw new Error(json.error && json.error.message ? json.error.message : body || 'Failed to create contact')
+  }
+
+  return json
 }
 
 function jsonResponse_(payload) {

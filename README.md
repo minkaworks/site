@@ -46,13 +46,18 @@ function doPost(e) {
   const payload = JSON.parse(e.postData.contents)
   const [givenName, ...rest] = String(payload.name || '').trim().split(/\s+/)
   const familyName = rest.join(' ')
-  const contact = ContactsApp.createContact(givenName || 'Lead', familyName || '', payload.email || '')
 
-  const notes = [payload.company, payload.message].filter(Boolean).join('\n\n')
-
-  if (notes) {
-    contact.setNotes(notes)
-  }
+  const response = UrlFetchApp.fetch('https://people.googleapis.com/v1/people:createContact?personFields=names,emailAddresses', {
+    method: 'post',
+    contentType: 'application/json',
+    headers: {
+      Authorization: 'Bearer ' + ScriptApp.getOAuthToken(),
+    },
+    payload: JSON.stringify({
+      names: [{ givenName: givenName || 'Lead', familyName: familyName || 'Lead' }],
+      emailAddresses: [{ value: payload.email || '' }],
+    }),
+  })
 
   return ContentService.createTextOutput(JSON.stringify({ ok: true }))
     .setMimeType(ContentService.MimeType.JSON)
@@ -61,4 +66,6 @@ function doPost(e) {
 
 Deploy the script as a web app and allow the endpoint to be called from your server.
 
-Note: `ContactsApp` is deprecated by Google, but it is the shortest path if you want a quick working integration. If you want, I can switch this repo to a more future-proof People API version inside Apps Script.
+The script uses the Google People API directly so it does not depend on `ContactsApp`.
+
+Make sure the Apps Script project has the People API enabled in Google Cloud and that the manifest includes the `https://www.googleapis.com/auth/script.external_request` and `https://www.googleapis.com/auth/contacts` scopes.

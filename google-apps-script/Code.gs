@@ -18,8 +18,13 @@ function doPost(e) {
       contact.setNotes(notes)
     }
 
-    return jsonResponse_({ ok: true })
+    return jsonResponse_({
+      ok: true,
+      name: contact.getFullName(),
+      email: String(payload.email).trim(),
+    })
   } catch (error) {
+    console.error(error)
     return jsonResponse_({ ok: false, error: String(error && error.message ? error.message : error) })
   }
 }

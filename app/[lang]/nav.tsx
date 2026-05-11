@@ -6,16 +6,11 @@ import type { Locale } from './content'
 export function Nav({ lang }: { lang: Locale }) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isLanguageOpen, setIsLanguageOpen] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
   const languageRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     function handleScroll() {
       setIsScrolled(window.scrollY > 24)
-    }
-
-    function handleResize() {
-      setIsMobile(window.matchMedia('(max-width: 620px)').matches)
     }
 
     function handleDocumentClick(event: MouseEvent) {
@@ -31,33 +26,23 @@ export function Nav({ lang }: { lang: Locale }) {
     }
 
     handleScroll()
-    handleResize()
     window.addEventListener('scroll', handleScroll, { passive: true })
-    window.addEventListener('resize', handleResize)
     document.addEventListener('click', handleDocumentClick)
     document.addEventListener('keydown', handleKeyDown)
 
     return () => {
       window.removeEventListener('scroll', handleScroll)
-      window.removeEventListener('resize', handleResize)
       document.removeEventListener('click', handleDocumentClick)
       document.removeEventListener('keydown', handleKeyDown)
     }
   }, [])
 
-  const isCompactBrand = isMobile && isScrolled
-
   return (
     <header className={isScrolled ? 'navShell isScrolled' : 'navShell'}>
       <nav className="nav" aria-label="Main navigation">
         <a className="brand" href={`/${lang}#top`} aria-label="Minka Works home">
-          <span className={isCompactBrand ? 'brandText isCompact' : 'brandText'}>
-            <span className="brandFull">MINKA WORKS</span>
-            <span className="brandCompact" aria-hidden="true">
-              M
-            </span>
-            </span>
-          </a>
+          <span className="brandText">MINKA WORKS</span>
+        </a>
         <div className="languageSelect" ref={languageRef}>
           <button
             className="localeSwitch"

@@ -14,8 +14,6 @@ export const dictionary = {
       text: 'Minka es un laboratorio open-source que convierte curiosidad técnica en herramientas, workflows de IA y documentación reutilizable. Diseñamos con evidencia, límites claros y componentes que otros pueden auditar, adaptar y mejorar.',
       primary: 'Conversemos',
       note: 'Trae una idea, repo o workflow; buscamos el camino verificable.',
-      thesis: 'Ruta de trabajo',
-      steps: ['Entender', 'Documentar', 'Construir'],
     },
     future: {
       eyebrow: 'Lo que construimos',
@@ -124,8 +122,6 @@ export const dictionary = {
       text: 'Minka is an open-source lab that turns technical curiosity into tools, AI workflows, and reusable documentation. We design with evidence, clear limits, and components others can audit, adapt, and improve.',
       primary: 'Let’s talk',
       note: 'Bring an idea, repo, or workflow; we will find the verifiable path.',
-      thesis: 'Working path',
-      steps: ['Understand', 'Document', 'Build'],
     },
     future: {
       eyebrow: 'What we build',

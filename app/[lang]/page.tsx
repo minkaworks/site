@@ -16,18 +16,6 @@ const pageMetadata = {
   },
 } as const
 
-function ClipboardIcon() {
-  return (
-    <svg className="visualIcon" aria-hidden="true" viewBox="0 0 24 24">
-      <path d="M9 4h6" />
-      <path d="M9 4a3 3 0 0 0 6 0" />
-      <path d="M8 5H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
-      <path d="m8 12 2 2 4-4" />
-      <path d="M8 17h8" />
-    </svg>
-  )
-}
-
 function GitHubIcon() {
   return (
     <svg aria-hidden="true" viewBox="0 0 24 24">
@@ -96,22 +84,6 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             </div>
           </div>
 
-          <div className="signalCard" aria-label={copy.hero.thesis}>
-            <div className="notebookHeader">
-              <ClipboardIcon />
-              <span>{copy.hero.thesis}</span>
-            </div>
-            <div className="signalBody">
-              {copy.hero.steps.map((step, index) => (
-                <div className="todoItem" key={step}>
-                  <span className="stepNumber" aria-hidden="true">
-                    0{index + 1}
-                  </span>
-                  <p>{step}</p>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       </section>
 

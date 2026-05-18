@@ -6,13 +6,13 @@ import { Nav } from './nav'
 
 const pageMetadata = {
   es: {
-    title: 'Minka Works | Laboratorio de IA práctica',
+    title: 'Minka Works | Open work. Useful systems.',
     description:
-      'Minka Works construye herramientas especializadas con evidencia para procesos manuales.',
+      'Minka crea herramientas open-source, workflows de IA y documentación reutilizable para builders técnicos.',
   },
   en: {
-    title: 'Minka Works | Practical AI Lab',
-    description: 'Minka Works builds specialized tools with evidence for manual workflows.',
+    title: 'Minka Works | Open work. Useful systems.',
+    description: 'Minka creates open-source tools, AI workflows, and reusable documentation for technical builders.',
   },
 } as const
 
@@ -85,6 +85,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
 
         <div className="heroGrid" id="top">
           <div className="heroCopy">
+            <span className="eyebrow">{copy.hero.eyebrow}</span>
             <h1>{copy.hero.title}</h1>
             <p className="heroText">{copy.hero.text}</p>
             <div className="heroActions">
@@ -182,6 +183,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       <section className="contactSlide" id="contact" data-slide>
         <div className="cta">
           <div>
+            <span className="eyebrow">{copy.contact.eyebrow}</span>
             <h2>{copy.contact.title}</h2>
             <p className="contactTrust">{copy.contact.trust}</p>
           </div>

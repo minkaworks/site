@@ -40,8 +40,8 @@ export function Nav({ lang }: { lang: Locale }) {
   return (
     <header className={isScrolled ? 'navShell isScrolled' : 'navShell'}>
       <nav className="nav" aria-label="Main navigation">
-        <a className="brand" href={`/${lang}#top`} aria-label="Minka Works home">
-          <span className="brandText">MINKA WORKS</span>
+        <a className="brand" href={`/${lang}#top`} aria-label="minka home">
+          <span className="brandText">minka</span>
         </a>
         <div className="languageSelect" ref={languageRef}>
           <button

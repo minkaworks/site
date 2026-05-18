@@ -2,17 +2,20 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Minka Works | Practical AI for Latin American Businesses',
+  title: 'Minka Works | Open work. Useful systems.',
   description:
-    'Minka Works builds practical AI tools for Latin American businesses that still run on WhatsApp, spreadsheets, and manual workflows.',
+    'Minka creates open-source tools, AI workflows, and reusable documentation for technical builders.',
   metadataBase: new URL('https://minkaworks.com'),
   openGraph: {
     title: 'Minka Works',
     description:
-      'Practical AI tools for Latin American businesses that still run on WhatsApp, spreadsheets, and manual workflows.',
+      'Open-source tools, AI workflows, and reusable documentation for technical builders.',
     url: 'https://minkaworks.com',
     siteName: 'Minka Works',
     type: 'website',
+  },
+  icons: {
+    icon: '/favicon.svg',
   },
 }
 
@@ -23,6 +26,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Public+Sans:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body>{children}</body>
     </html>
   )

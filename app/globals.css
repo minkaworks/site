@@ -769,14 +769,20 @@ p {
   color: var(--on-variant);
 }
 
-.siteFooterGithub {
+.siteFooterSocials {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.siteFooterSocial {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   color: var(--primary);
 }
 
-.siteFooterGithub svg {
+.siteFooterSocial svg {
   width: 22px;
   height: 22px;
   fill: currentColor;

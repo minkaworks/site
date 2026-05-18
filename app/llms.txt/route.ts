@@ -30,8 +30,10 @@ Minka Works is an open-source lab that turns technical curiosity into useful sys
 
 ## Social and source links
 
-- GitHub: https://github.com/minkaworks
-- Codeberg: https://codeberg.org/minkaworks
+- Primary repository: https://codeberg.org/minkaworks/site
+- GitHub mirror: https://github.com/minkaworks/site
+- Codeberg organization: https://codeberg.org/minkaworks
+- GitHub organization: https://github.com/minkaworks
 
 ## Contact
 

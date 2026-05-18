@@ -1,7 +1,17 @@
 {
-  "name": "minkaworks-landing",
+  "name": "@minkaworks/site",
   "version": "0.1.0",
+  "description": "Open-source site for Minka Works.",
   "private": true,
+  "license": "MIT",
+  "homepage": "https://minkaworks.com",
+  "repository": {
+    "type": "git",
+    "url": "https://codeberg.org/minkaworks/site.git"
+  },
+  "bugs": {
+    "url": "https://codeberg.org/minkaworks/site/issues"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",

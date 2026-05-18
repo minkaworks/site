@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -14,9 +14,26 @@ export const metadata: Metadata = {
     siteName: 'Minka Works',
     type: 'website',
   },
-  icons: {
-    icon: '/favicon.svg',
+  appleWebApp: {
+    capable: true,
+    title: 'Minka Works',
+    statusBarStyle: 'black',
   },
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.png', sizes: '64x64', type: 'image/png' },
+    ],
+    apple: [{ url: '/favicon-512.png', sizes: '512x512', type: 'image/png' }],
+  },
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+  themeColor: '#121416',
+  colorScheme: 'dark',
 }
 
 export default function RootLayout({

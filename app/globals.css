@@ -362,6 +362,12 @@ p {
   background: rgba(12, 14, 16, 0.9);
 }
 
+.hero h1 {
+  max-width: 700px;
+  font-size: clamp(38px, 5.8vw, 72px);
+  line-height: 1.02;
+}
+
 .heroText {
   max-width: 660px;
   margin-bottom: 30px;

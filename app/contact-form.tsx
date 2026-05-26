@@ -1,9 +1,7 @@
 'use client'
 
 import { useState, type FormEvent } from 'react'
-import type { dictionary } from './content'
-
-type ContactCopy = (typeof dictionary)['en']['contact']
+import type { ContactCopy } from './content'
 
 type Status = 'idle' | 'submitting' | 'success' | 'error'
 

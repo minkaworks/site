@@ -1,37 +1,20 @@
-import type { Metadata, Viewport } from 'next'
+import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
   title: 'Minka Works | Open-source lab',
-  description: 'Minka Works is an open-source lab publishing software, tools, and cookbooks.',
+  description: 'Minka is an open-source lab publishing software, tools, and cookbooks in public.',
   metadataBase: new URL('https://minkaworks.com'),
   openGraph: {
     title: 'Minka Works',
-    description: 'Minka Works is an open-source lab publishing software, tools, and cookbooks.',
+    description: 'Minka is an open-source lab publishing software, tools, and cookbooks in public.',
     url: 'https://minkaworks.com',
     siteName: 'Minka Works',
     type: 'website',
   },
-  appleWebApp: {
-    capable: true,
-    title: 'Minka Works',
-    statusBarStyle: 'black',
-  },
   icons: {
-    icon: [
-      { url: '/favicon.svg', type: 'image/svg+xml' },
-      { url: '/favicon.png', sizes: '64x64', type: 'image/png' },
-    ],
-    apple: [{ url: '/favicon-512.png', sizes: '512x512', type: 'image/png' }],
+    icon: '/favicon.svg',
   },
-}
-
-export const viewport: Viewport = {
-  width: 'device-width',
-  initialScale: 1,
-  viewportFit: 'cover',
-  themeColor: '#121416',
-  colorScheme: 'dark',
 }
 
 export default function RootLayout({
@@ -45,7 +28,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Public+Sans:wght@400;500;600;700;800&display=swap"
           rel="stylesheet"
         />
       </head>

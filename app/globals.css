@@ -213,91 +213,11 @@ p {
 
 .brand:focus-visible,
 .brandText:focus-visible,
-.localeSwitch:focus-visible,
 .button:focus-visible,
 .contactForm input:focus,
 .contactForm textarea:focus {
   outline: 2px solid rgba(186, 203, 184, 0.52);
   outline-offset: 3px;
-}
-
-.languageSelect {
-  position: relative;
-}
-
-.localeSwitch {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-height: 38px;
-  padding: 0 12px;
-  border: 1px solid var(--outline-variant);
-  border-radius: var(--radius);
-  background: rgba(26, 28, 30, 0.72);
-  color: var(--on-variant);
-  cursor: pointer;
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  box-shadow: var(--shadow);
-  transition:
-    background-color 160ms ease,
-    border-color 160ms ease,
-    color 160ms ease,
-    transform 160ms ease;
-}
-
-.localeSwitch svg {
-  width: 17px;
-  height: 17px;
-  fill: none;
-  stroke: currentColor;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 2;
-}
-
-.localeSwitch:hover {
-  border-color: rgba(186, 203, 184, 0.68);
-  background: rgba(47, 62, 48, 0.42);
-  color: var(--primary);
-  transform: translateY(-1px);
-}
-
-.localeSwitch:active {
-  transform: translateY(1px);
-}
-
-.languageMenu {
-  position: absolute;
-  top: calc(100% + 10px);
-  right: 0;
-  display: grid;
-  min-width: 154px;
-  padding: 6px;
-  border: 1px solid rgba(67, 72, 66, 0.9);
-  border-radius: var(--radius);
-  background: rgba(12, 14, 16, 0.98);
-  box-shadow: 16px 16px 0 rgba(0, 0, 0, 0.2);
-  z-index: 30;
-}
-
-.languageMenu a {
-  padding: 10px 11px;
-  border-radius: var(--radius);
-  color: var(--on-variant);
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.languageMenu a:hover,
-.languageMenu a[aria-current='page'] {
-  background: rgba(47, 62, 48, 0.62);
-  color: var(--primary);
 }
 
 .hero {
@@ -389,9 +309,7 @@ p {
 .button,
 .contactForm label,
 .formStatus,
-.siteFooter,
-.languageMenu,
-.localeSwitch {
+.siteFooter {
   font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
@@ -910,12 +828,6 @@ p {
     font-size: 22px;
   }
 
-  .localeSwitch {
-    min-height: 34px;
-    padding: 0 10px;
-    box-shadow: none;
-  }
-
   .hero {
     padding-top: 82px;
   }
@@ -985,10 +897,6 @@ p {
 
   .brandText {
     font-size: 20px;
-  }
-
-  .localeSwitch span {
-    display: none;
   }
 
   .heroCopy,
